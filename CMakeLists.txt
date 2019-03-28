@@ -662,3 +662,31 @@ else()
     # this rule is used if the install prefix is the build directory
     install(CODE "MESSAGE(\"xmr-stak installed to folder 'bin'\")")
 endif()
+
+file(TO_CMAKE_PATH "$ENV{HWLOC_ROOT}/bin" _hwloc_bin_dir)
+
+add_custom_command(TARGET xmr-stak PRE_BUILD
+  COMMAND "${CMAKE_COMMAND}" -E copy_directory
+    "${_hwloc_bin_dir}"
+    "${CMAKE_BINARY_DIR}/bin")
+
+file(TO_CMAKE_PATH "$ENV{ProgramW6432}/OpenSSL-Win64/bin" _open_ssl_bin_dir)
+
+add_custom_command(TARGET xmr-stak PRE_BUILD
+  COMMAND "${CMAKE_COMMAND}" -E copy_directory
+    "${_open_ssl_bin_dir}"
+    "${CMAKE_BINARY_DIR}/bin")
+
+file(TO_CMAKE_PATH "$ENV{CUDA_PATH}/bin" _cuda_bin_dir)
+
+add_custom_command(TARGET xmr-stak PRE_BUILD
+  COMMAND "${CMAKE_COMMAND}" -E copy_directory
+    "${_cuda_bin_dir}"
+    "${CMAKE_BINARY_DIR}/bin")
+
+file(TO_CMAKE_PATH "$ENV{VS140COMNTOOLS}/../../VC/redist/x64/Microsoft.VC140.CRT" _vs140_dir)
+
+add_custom_command(TARGET xmr-stak PRE_BUILD
+  COMMAND "${CMAKE_COMMAND}" -E copy_directory
+    "${_vs140_dir}"
+    "${CMAKE_BINARY_DIR}/bin")
