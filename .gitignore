@@ -30,3 +30,9 @@ cmake-build-debug/
 
 # Thumbnails
 ._*
+
+# Qt Creator files
+CMakeLists.txt.user
+
+# WinMerge backup files
+*.bak

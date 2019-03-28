@@ -1,6 +1,7 @@
 project(xmr-stak)
 
 cmake_minimum_required(VERSION 3.4.0)
+cmake_policy(SET CMP0074 NEW)
 
 # enforce C++11
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -608,16 +609,17 @@ endif()
 file(GLOB SRCFILES_CPP "xmrstak/cli/*.cpp")
 set_source_files_properties(${SRCFILES_CPP} PROPERTIES LANGUAGE CXX)
 
+set(XMR_STAK xmr-stak-bin)
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-    add_executable(xmr-stak ${SRCFILES_CPP} xmrstak/cli/xmr-stak.manifest)
+    add_executable(${XMR_STAK} ${SRCFILES_CPP} xmrstak/cli/xmr-stak.manifest)
 else()
-    add_executable(xmr-stak ${SRCFILES_CPP})
+    add_executable(${XMR_STAK} ${SRCFILES_CPP})
 endif()
 
 set(EXECUTABLE_OUTPUT_PATH "bin" CACHE STRING "Path to place executables relative to ${CMAKE_INSTALL_PREFIX}")
 set(LIBRARY_OUTPUT_PATH "bin" CACHE STRING "Path to place libraries relative to ${CMAKE_INSTALL_PREFIX}")
 
-target_link_libraries(xmr-stak ${LIBS} xmr-stak-c xmr-stak-backend xmr-stak-asm)
+target_link_libraries(${XMR_STAK} ${LIBS} xmr-stak-c xmr-stak-backend xmr-stak-asm)
 
 ################################################################################
 # Install
@@ -625,7 +627,7 @@ target_link_libraries(xmr-stak ${LIBS} xmr-stak-c xmr-stak-backend xmr-stak-asm)
 
 # do not install the binary if the project and install are equal
 if( NOT CMAKE_INSTALL_PREFIX STREQUAL PROJECT_BINARY_DIR )
-    install(TARGETS xmr-stak
+    install(TARGETS ${XMR_STAK}
             RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/${EXECUTABLE_OUTPUT_PATH}")
     if(CUDA_FOUND)
         if(WIN32)
@@ -647,5 +649,8 @@ if( NOT CMAKE_INSTALL_PREFIX STREQUAL PROJECT_BINARY_DIR )
     endif()
 else()
     # this rule is used if the install prefix is the build directory
-    install(CODE "MESSAGE(\"xmr-stak installed to folder 'bin'\")")
+    install(CODE "MESSAGE(\"${XMR_STAK} installed to folder 'bin'\")")
 endif()
+
+install(FILES scripts/xmr-stak.bat
+  DESTINATION "${CMAKE_INSTALL_PREFIX}/${EXECUTABLE_OUTPUT_PATH}")

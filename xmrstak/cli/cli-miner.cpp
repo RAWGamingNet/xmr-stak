@@ -213,7 +213,7 @@ void do_guided_pool_config()
 
 	configEditor configTpl{};
 	configTpl.set(std::string(tpl));
-	bool prompted = false;
+    bool prompted = false;
 
 	auto& currency = params::inst().currency;
 	if(currency.empty() || !jconf::IsOnAlgoList(currency))
@@ -360,7 +360,7 @@ void do_guided_config()
 
 	configEditor configTpl{};
 	configTpl.set(std::string(tpl));
-	bool prompted = false;
+	bool prompted = true;
 
 	auto& http_port = params::inst().httpd_port;
 	if(http_port == params::httpd_port_unset)
