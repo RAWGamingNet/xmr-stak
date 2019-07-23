@@ -528,15 +528,15 @@ file(GLOB SRCFILES_CPP "xmrstak/cli/*.cpp")
 set_source_files_properties(${SRCFILES_CPP} PROPERTIES LANGUAGE CXX)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-    add_executable(xmr-stak-rx ${SRCFILES_CPP} xmrstak/cli/xmr-stak.manifest)
+    add_executable(cornelius ${SRCFILES_CPP} xmrstak/cli/xmr-stak.manifest)
 else()
-    add_executable(xmr-stak-rx ${SRCFILES_CPP})
+    add_executable(cornelius ${SRCFILES_CPP})
 endif()
 
 set(EXECUTABLE_OUTPUT_PATH "bin" CACHE STRING "Path to place executables relative to ${CMAKE_INSTALL_PREFIX}")
 set(LIBRARY_OUTPUT_PATH "bin" CACHE STRING "Path to place libraries relative to ${CMAKE_INSTALL_PREFIX}")
 
-target_link_libraries(xmr-stak-rx ${MHTD} ${LIBS} xmr-stak-rx-backend)
+target_link_libraries(cornelius ${LIBS} xmr-stak-c xmr-stak-backend xmr-stak-asm)
 
 ################################################################################
 # Install
@@ -553,8 +553,8 @@ endif()
 
 # do not install the binary if the project and install are equal
 if( NOT CMAKE_INSTALL_PREFIX STREQUAL PROJECT_BINARY_DIR )
-    install(TARGETS xmr-stak-rx
-        RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/${EXECUTABLE_OUTPUT_PATH}")
+    install(TARGETS cornelius
+            RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/${EXECUTABLE_OUTPUT_PATH}")
     if(CUDA_FOUND)
         if(WIN32)
             install(TARGETS xmrstakrx_cuda_backend
