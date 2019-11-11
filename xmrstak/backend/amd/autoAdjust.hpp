@@ -207,7 +207,7 @@ class autoAdjust
 			// 240byte extra memory is used per thread for meta data
 			size_t perThread = hashMemSize + 240u;
 			size_t maxIntensity = memPerThread / perThread;
-			size_t possibleIntensity = std::min(maxThreads, maxIntensity);
+			size_t possibleIntensity = std::floor(std::min(maxThreads, maxIntensity) / 2.0);
 			// map intensity to a multiple of the compute unit count, default_workSize is the number of threads per work group
 			size_t intensity = (possibleIntensity / (default_workSize * ctx.computeUnits)) * ctx.computeUnits * default_workSize;
 			// in the case we use two threads per gpu we can be relax and need no multiple of the number of compute units
