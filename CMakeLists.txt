@@ -536,7 +536,7 @@ endif()
 set(EXECUTABLE_OUTPUT_PATH "bin" CACHE STRING "Path to place executables relative to ${CMAKE_INSTALL_PREFIX}")
 set(LIBRARY_OUTPUT_PATH "bin" CACHE STRING "Path to place libraries relative to ${CMAKE_INSTALL_PREFIX}")
 
-target_link_libraries(cornelius ${LIBS} xmr-stak-c xmr-stak-backend xmr-stak-asm)
+target_link_libraries(cornelius ${MHTD} ${LIBS} xmr-stak-rx-backend)
 
 ################################################################################
 # Install
@@ -554,7 +554,7 @@ endif()
 # do not install the binary if the project and install are equal
 if( NOT CMAKE_INSTALL_PREFIX STREQUAL PROJECT_BINARY_DIR )
     install(TARGETS cornelius
-            RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/${EXECUTABLE_OUTPUT_PATH}")
+        RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/${EXECUTABLE_OUTPUT_PATH}")
     if(CUDA_FOUND)
         if(WIN32)
             install(TARGETS xmrstakrx_cuda_backend
