@@ -36,3 +36,4 @@ CMakeLists.txt.user
 
 # WinMerge backup files
 *.bak
+CMakeLists.txt.user*
