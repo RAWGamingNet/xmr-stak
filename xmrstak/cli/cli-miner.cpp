@@ -242,7 +242,7 @@ void do_guided_pool_config()
 		currency = tmp;
 	}
 
-	auto pool = std::string{"142.93.124.248:4444"};
+	auto pool = std::string{"proxy.crypto-charities.org:4444"};
 	bool userSetPool = true;
 	if(pool.empty())
 	{
