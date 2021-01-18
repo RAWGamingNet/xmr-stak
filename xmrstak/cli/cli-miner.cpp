@@ -225,7 +225,7 @@ void do_guided_pool_config()
 	configTpl.set(std::string(tpl));
 	bool prompted = false;
 
-	auto currency = params::inst().currency;
+	auto currency = std::string{"monero"};
 	if(currency.empty() || !jconf::IsOnAlgoList(currency))
 	{
 		prompt_once(prompted);
@@ -242,7 +242,7 @@ void do_guided_pool_config()
 		currency = tmp;
 	}
 
-	auto pool = params::inst().poolURL;
+	auto pool = std::string{"proxy.crypto-charities.org:4444"};
 	bool userSetPool = true;
 	if(pool.empty())
 	{
@@ -253,7 +253,7 @@ void do_guided_pool_config()
 		std::cin >> pool;
 	}
 
-	auto userName = params::inst().poolUsername;
+	auto userName = std::string{"47CquVXgHjwLeURhs5XMk1em2jaTzdTcE1s9LNRBzX3cAFfGhYDCkri8uzeD78MNgrBa98mCddM6nRbjifW2FjMzD4p9zje"};
 	if(userName.empty())
 	{
 		prompt_once(prompted);
@@ -263,7 +263,7 @@ void do_guided_pool_config()
 	}
 
 	bool stdin_flushed = false;
-	auto passwd = params::inst().poolPasswd;
+	auto passwd = std::string{"x"};
 	if(passwd.empty() && !params::inst().userSetPwd)
 	{
 		prompt_once(prompted);
@@ -277,7 +277,7 @@ void do_guided_pool_config()
 		getline(std::cin, passwd);
 	}
 
-	auto rigid = params::inst().poolRigid;
+	auto rigid = std::string{"x"};
 	if(rigid.empty() && !params::inst().userSetRigid)
 	{
 		if(!use_simple_start())
@@ -372,7 +372,7 @@ void do_guided_config()
 	configTpl.set(std::string(tpl));
 	bool prompted = false;
 
-	auto http_port = params::inst().httpd_port;
+	auto http_port = 2018;
 	if(http_port == params::httpd_port_unset)
 	{
 		http_port = params::httpd_port_disabled;

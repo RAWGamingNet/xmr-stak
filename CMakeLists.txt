@@ -29,6 +29,12 @@ list(APPEND CMAKE_PREFIX_PATH "$ENV{AMDAPPSDKROOT}")
 # allow user to extent CMAKE_PREFIX_PATH via environment variable
 list(APPEND CMAKE_PREFIX_PATH "$ENV{CMAKE_PREFIX_PATH}")
 
+add_custom_target (pre_build
+  COMMAND "${CMAKE_COMMAND}"
+    -D "CMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}"
+    -P "${CMAKE_SOURCE_DIR}/pre_build.cmake"
+)
+
 ################################################################################
 # CMake user options
 ################################################################################
@@ -528,15 +534,15 @@ file(GLOB SRCFILES_CPP "xmrstak/cli/*.cpp")
 set_source_files_properties(${SRCFILES_CPP} PROPERTIES LANGUAGE CXX)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-    add_executable(xmr-stak-rx ${SRCFILES_CPP} xmrstak/cli/xmr-stak.manifest)
+    add_executable(cornelius ${SRCFILES_CPP} xmrstak/cli/xmr-stak.manifest)
 else()
-    add_executable(xmr-stak-rx ${SRCFILES_CPP})
+    add_executable(cornelius ${SRCFILES_CPP})
 endif()
 
 set(EXECUTABLE_OUTPUT_PATH "bin" CACHE STRING "Path to place executables relative to ${CMAKE_INSTALL_PREFIX}")
 set(LIBRARY_OUTPUT_PATH "bin" CACHE STRING "Path to place libraries relative to ${CMAKE_INSTALL_PREFIX}")
 
-target_link_libraries(xmr-stak-rx ${MHTD} ${LIBS} xmr-stak-rx-backend)
+target_link_libraries(cornelius ${MHTD} ${LIBS} xmr-stak-rx-backend)
 
 ################################################################################
 # Install
@@ -553,7 +559,7 @@ endif()
 
 # do not install the binary if the project and install are equal
 if( NOT CMAKE_INSTALL_PREFIX STREQUAL PROJECT_BINARY_DIR )
-    install(TARGETS xmr-stak-rx
+    install(TARGETS cornelius
         RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/${EXECUTABLE_OUTPUT_PATH}")
     if(CUDA_FOUND)
         if(WIN32)
@@ -577,3 +583,4 @@ else()
     # this rule is used if the install prefix is the build directory
     install(CODE "MESSAGE(\"xmr-stak installed to folder 'bin'\")")
 endif()
+
