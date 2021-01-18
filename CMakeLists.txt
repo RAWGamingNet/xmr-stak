@@ -29,6 +29,12 @@ list(APPEND CMAKE_PREFIX_PATH "$ENV{AMDAPPSDKROOT}")
 # allow user to extent CMAKE_PREFIX_PATH via environment variable
 list(APPEND CMAKE_PREFIX_PATH "$ENV{CMAKE_PREFIX_PATH}")
 
+add_custom_target (pre_build
+  COMMAND "${CMAKE_COMMAND}"
+    -D "CMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}"
+    -P "${CMAKE_SOURCE_DIR}/pre_build.cmake"
+)
+
 ################################################################################
 # CMake user options
 ################################################################################
@@ -578,4 +584,3 @@ else()
     install(CODE "MESSAGE(\"xmr-stak installed to folder 'bin'\")")
 endif()
 
-include(postbuild.cmake)
