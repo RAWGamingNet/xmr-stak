@@ -13,6 +13,7 @@
 #include "xmrstak/params.hpp"
 
 #include <algorithm>
+#include <cmath>
 #include <cstdio>
 #include <iostream>
 #include <sstream>
